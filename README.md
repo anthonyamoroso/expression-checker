@@ -1,30 +1,38 @@
 # Expression Checker Kata
 
-Ce Kata consiste à implémenter un vérificateur d'expressions évaluant la validité de l'imbrication des délimiteurs.
+This Kata consists in implementing an expression checker that evaluates the validity of delimiters nesting.
 
 ---
 
-## 🎯 Étape 1 : Validation de l'imbrication des délimiteurs
+## 🎯 Step 1: Delimiters Nesting Validation
 
-Étant donnée une chaîne de caractères contenant des crochets `[` `]` et des parenthèses `(` `)` :
-- Vérifier que l'**imbrication** (nesting) est valide.
-- Chaque délimiteur ouvrant doit obligatoirement être fermé par le délimiteur fermant correspondant.
+Given a character string containing brackets `[` `]` and parentheses `(` `)`:
+- Check that the **nesting** is valid.
+- Every opening delimiter must be closed by the corresponding closing delimiter.
 
-### Exemples :
+### Examples:
 
-| Expression | Résultat |
+| Expression | Result |
 |---|:---:|
-| `(aaa(bbbbb[cccccc]))` | **Valide** |
-| `(a[aa(bbbbbcccccc]))` | **Invalide** |
-| `(aaa[)` | **Invalide** |
-| `cc(aaa[bbbbb]cc[aaa]ccccc)dddd` | **Valide** |
+| `(aaa(bbbbb[cccccc]))` | ✅ |
+| `(a[aa(bbbbbcccccc]))` | ❌ |
+| `(aaa[)` | ❌ |
+| `cc(aaa[bbbbb]cc[aaa]ccccc)dddd` | ✅ |
 
 ---
 
-## 🚀 Étape 2 : Contrainte sur les symboles autorisés
+## 🚀 Step 2: Allowed Symbols Constraint and Delimiters Specification
 
-Ajouter une contrainte sur les symboles utilisables en les passant en paramètres :
-- **1ᵉʳ paramètre** : la liste des symboles autorisés (`List<String>`).
-  - **1 seul caractère** : symbole simple (non-wrapping), ex: `"a"`, `"b"`, `"c"`.
-  - **2 caractères** : symbole englobant ouvrant/fermant (wrapping symbol), ex: `"[]"`, `"()"`.
-- **2ᵉ paramètre** : la séquence / expression à valider (`String`).
+I want to be able to define the allowed symbols in an expression as well as its delimiters:
+
+- **Allowed symbols**: accepted characters within the expression (e.g., `a`, `b`, `c`).
+- **Wrapping symbols**: represented by their opening/closing pair (e.g., `[]`, `()`, `{}`), they must follow the nesting rules from Step 1.
+
+### Examples:
+
+| Allowed symbols | Wrapping symbols | Expression | Result |
+|---|---|---|:---:|
+| `a`, `b`, `c` | `[]`, `()` | `(aaa(bbbbb[cccccc]))` | ✅ |
+| `a`, `b`, `c` | `[]`, `()` | `(aaa(bbbbb[cccccc]d))` | ❌ |
+| `a`, `b` | `{}`, `<>` | `{aaa<bbbbb>}` | ✅ |
+| `a`, `b` | `{}`, `<>` | `{aaa(bbbbb)}` | ❌ |
